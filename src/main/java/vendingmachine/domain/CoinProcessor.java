@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // 일급컬렉션?
-public class VendingMachine {
+public class CoinProcessor {
     // 동전종류-개수 map
     private static final EnumMap<Coin, Integer> vendingMachineCoins = new EnumMap<>(Coin.class);
     public static final String LINE_SEPARATOR = System.lineSeparator();

@@ -14,6 +14,10 @@ public class PurchaseProcessor {
         return String.format("투입 금액: %d원", this.machineInputAmount);
     }
 
+    public int getMachineInputAmount() {
+        return this.machineInputAmount;
+    }
+
     // 구입 가능한지 검증부터 해야 함 - while(true) 안에서 돌도록
     public boolean isPossiblePurchase(String productName, VendingMachineProduct vendingMachineProduct) {
         if (machineInputAmount < vendingMachineProduct.getProductPriceByName(productName)) {
@@ -21,7 +25,6 @@ public class PurchaseProcessor {
         }
         return true;
     }
-
 
     // 구매 - 투입 금액 갱신 && 해당상품 -1
     public void purchaseProduct(String productName, VendingMachineProduct vendingMachineProduct) {

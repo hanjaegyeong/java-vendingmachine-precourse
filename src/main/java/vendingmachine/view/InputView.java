@@ -9,6 +9,8 @@ public class InputView {
     private static final String INPUT_PURCHASE_ITEM_MESSAGE = "구매할 상품명을 입력해 주세요.";
     private static final String INVALID_AMOUNT_HELD_INPUT_MESSAGE = "[ERROR] 정수만을 입력해 주세요.";
 
+    public static final String LINE_SEPARATOR = System.lineSeparator();
+
     // inputVendingMachineAmount 로 리팩토링
     public static int inputAmountHeld() {
         System.out.println(INPUT_AMOUNT_HELD_MESSAGE);
@@ -24,11 +26,13 @@ public class InputView {
     }
 
     public static String inputItemHeld() {
+        System.out.print(LINE_SEPARATOR);
         System.out.println(INPUT_ITEM_HELD_MESSAGE);
         return readLine();
     }
 
-    public static int inputAmount() {
+    public static int inputMachineInputAmount() {
+        System.out.print(LINE_SEPARATOR);
         System.out.println(INPUT_MACHINE_INPUT_AMOUNT_MESSAGE);
         return inputInt();
     }

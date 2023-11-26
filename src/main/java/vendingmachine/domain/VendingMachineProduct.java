@@ -32,7 +32,6 @@ public class VendingMachineProduct {
                 .peek(this::validateProductDetails)
                 .map(this::createProductFromDetails)
                 .forEach(this::addProduct);
-        products.forEach(System.out::println); //나중에 이부분 제거
     }
 
     private String[] removeBracketsAndSplit(String productString) {

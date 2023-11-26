@@ -74,7 +74,6 @@ public class VendingMachineCoin {
 
     // 잔돈 반환
     public EnumMap<Coin, Integer> calculateChange(int changeAmount) {
-
         EnumMap<Coin, Integer> change = new EnumMap<>(Coin.class);
         int remainingAmount = changeAmount;
 

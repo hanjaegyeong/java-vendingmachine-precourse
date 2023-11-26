@@ -19,23 +19,10 @@ public class Product {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
     public Product decreaseQuantityByOne() {
         if (this.quantity == 0) {
             return this; // TODO: 남은 수량 0되면 반복 종료 로직 넣기
         }
         return new Product(this.name, this.price, this.quantity - 1);
-    }
-
-    // 출력 테스트용 매서드
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                '}';
     }
 }

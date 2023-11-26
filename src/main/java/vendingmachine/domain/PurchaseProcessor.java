@@ -19,10 +19,12 @@ public class PurchaseProcessor {
     }
 
     // 구입 가능한지 검증부터 해야 함 - while(true) 안에서 돌도록
+    // 금액 검증, 수량 검증
     public boolean isPossiblePurchase(String productName, VendingMachineProduct vendingMachineProduct) {
         if (machineInputAmount < vendingMachineProduct.getProductPriceByName(productName)) {
             return false;
         }
+        // 수량검증 못함ㅜ
         return true;
     }
 

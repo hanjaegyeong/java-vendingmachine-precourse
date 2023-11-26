@@ -24,18 +24,21 @@ public class VendingMachineController {
 
     private static void PurchaseProduct(VendingMachineProduct vendingMachineProduct, PurchaseProcessor purchaseProcessor) {
         try {
-            // 상품 구매 (반복로직)
-            while (true) {
-                String itemName = InputView.inputPurchaseItem();
-                purchaseProcessor.purchaseProduct(itemName, vendingMachineProduct);
-                OutputView.printMachineInputAmount(purchaseProcessor.formatMachineInputAmountOutput());
-                if (!purchaseProcessor.isPossiblePurchase(itemName, vendingMachineProduct)) {
-                    break;
-                }
-            }
+            performProductPurchase(vendingMachineProduct, purchaseProcessor);
         } catch (IllegalArgumentException illegalArgumentException) {
             System.out.println(illegalArgumentException.getMessage());
             PurchaseProduct(vendingMachineProduct, purchaseProcessor);
+        }
+    }
+
+    private static void performProductPurchase(VendingMachineProduct vendingMachineProduct, PurchaseProcessor purchaseProcessor) {
+        while (true) {
+            String itemName = InputView.inputPurchaseItem();
+            purchaseProcessor.purchaseProduct(itemName, vendingMachineProduct);
+            OutputView.printMachineInputAmount(purchaseProcessor.formatMachineInputAmountOutput());
+            if (!purchaseProcessor.isPossiblePurchase(itemName, vendingMachineProduct)) {
+                break;
+            }
         }
     }
 

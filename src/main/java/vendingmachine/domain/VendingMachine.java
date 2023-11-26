@@ -35,14 +35,14 @@ public class VendingMachine {
     }
 
     // 10의 배수이면 자동으로 양수 처리되는지 확인
-    private void validatePositiveNumber(int number) {
-        if (number <= 0) {
+    private void validatePositiveNumber(int price) {
+        if (price <= 0) {
             throw new IllegalArgumentException("ERROR: 양수를 입력하여 주세요.");
         }
     }
 
-    private void validateMultipleOfTen(int number) {
-        if (number % 10 != 0) {
+    private void validateMultipleOfTen(int price) {
+        if (price % 10 != 0) {
             throw new IllegalArgumentException("ERROR: 10의 배수를 입력하여 주세요.");
         }
     }

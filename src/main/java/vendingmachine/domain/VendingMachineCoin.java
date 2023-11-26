@@ -14,9 +14,24 @@ public class VendingMachineCoin {
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void generateVendingMachineCoins(int vendingMachineAmount) {
+        List<Integer> coinTypes = Arrays.asList(500, 100, 50, 10);
         validateVendingMachineCoins(vendingMachineAmount);
 
-        List<Integer> coinTypes = Arrays.asList(500, 100, 50, 10);
+        // 동전 수량 초기화
+        initializeCoinQuantities(coinTypes);
+
+        // 동전 생성 및 추가
+        createAndAddCoins(vendingMachineAmount, coinTypes);
+    }
+
+    private void initializeCoinQuantities(List<Integer> coinTypes) {
+        for (int coinValue : coinTypes) {
+            Coin coin = Coin.findByAmount(coinValue);
+            vendingMachineCoins.put(coin, 0);
+        }
+    }
+
+    private void createAndAddCoins(int vendingMachineAmount, List<Integer> coinTypes) {
         int remainingAmount = vendingMachineAmount;
 
         while (remainingAmount > 0) {
@@ -37,13 +52,13 @@ public class VendingMachineCoin {
     // 10의 배수이면 자동으로 양수 처리되는지 확인
     private void validatePositiveNumber(int price) {
         if (price <= 0) {
-            throw new IllegalArgumentException("ERROR: 양수를 입력하여 주세요.");
+            throw new IllegalArgumentException("[ERROR] 양수를 입력하여 주세요.");
         }
     }
 
     private void validateMultipleOfTen(int price) {
         if (price % 10 != 0) {
-            throw new IllegalArgumentException("ERROR: 10의 배수를 입력하여 주세요.");
+            throw new IllegalArgumentException("[ERROR] 10의 배수를 입력하여 주세요.");
         }
     }
 
@@ -55,5 +70,32 @@ public class VendingMachineCoin {
 
     private String formatVendingMachineCoinOutput(Coin coin, int coinQuantity) {
         return String.format("%d원 - %d개", coin.getAmount(), coinQuantity);
+    }
+
+    // 잔돈 반환
+    public EnumMap<Coin, Integer> calculateChange(int changeAmount) {
+
+        EnumMap<Coin, Integer> change = new EnumMap<>(Coin.class);
+        int remainingAmount = changeAmount;
+
+        for (Coin coin : Coin.values()) {
+            int coinValue = coin.getAmount();
+            int availableCoins = vendingMachineCoins.getOrDefault(coin, 0);
+
+            if (availableCoins > 0 && coinValue <= remainingAmount) {
+                int maxUsableCoins = remainingAmount / coinValue;
+                int usedCoins = Math.min(maxUsableCoins, availableCoins);
+
+                change.put(coin, usedCoins);
+                remainingAmount -= usedCoins * coinValue;
+            }
+        }
+        return change;
+    }
+
+    public String formatChangeOutput(EnumMap<Coin, Integer> change) {
+        return change.entrySet().stream()
+                .map(entry -> formatVendingMachineCoinOutput(entry.getKey(), entry.getValue()))
+                .collect(Collectors.joining(LINE_SEPARATOR));
     }
 }

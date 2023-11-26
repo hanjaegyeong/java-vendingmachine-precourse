@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // 상품 존재하는지 검증하는 기능 추가
-public class ProductProcessor {
+public class VendingMachineProduct {
     private List<Product> products;
 
-    public ProductProcessor() {
+    public VendingMachineProduct() {
         this.products = new ArrayList<>();
     }
 
@@ -86,5 +86,13 @@ public class ProductProcessor {
         if (price % 10 != 0) {
             throw new IllegalArgumentException("[ERROR] 10의 배수를 입력하여 주세요.");
         }
+    }
+
+    public int getProductPriceByName(String name) {
+        return products.stream()
+                .filter(product -> product.getName().equals(name))
+                .findFirst()
+                .map(Product::getPrice)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 상품이 존재하지 않습니다: " + name));
     }
 }

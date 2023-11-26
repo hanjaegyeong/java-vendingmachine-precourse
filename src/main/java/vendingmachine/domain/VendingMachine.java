@@ -5,11 +5,13 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // 일급컬렉션?
 public class VendingMachine {
     // 동전종류-개수 map
-    private static EnumMap<Coin, Integer> vendingMachineCoins = new EnumMap<>(Coin.class);
+    private static final EnumMap<Coin, Integer> vendingMachineCoins = new EnumMap<>(Coin.class);
+    public static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void generateVendingMachineCoins(int vendingMachineAmount) {
         validateVendingMachineCoins(vendingMachineAmount);
@@ -43,5 +45,15 @@ public class VendingMachine {
         if (number % 10 != 0) {
             throw new IllegalArgumentException("ERROR: 10의 배수를 입력하여 주세요.");
         }
+    }
+
+    public String formatVendingMachineCoinsOutput() {
+        return vendingMachineCoins.entrySet().stream() // vendingMachineCoins Map에 담긴 객체 집합을 스트림화 해서
+                .map(entry -> formatVendingMachineCoinOutput(entry.getKey(), entry.getValue())) // 각 줄 포맷
+                .collect(Collectors.joining(LINE_SEPARATOR)); // 엔터로 각 output join
+    }
+
+    private String formatVendingMachineCoinOutput(Coin coin, int coinQuantity) {
+        return String.format("%d원 - %d개", coin.getAmount(), coinQuantity);
     }
 }
